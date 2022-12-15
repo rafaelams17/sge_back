@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model usuario{
+  id_user Int @id @default(autoincrement())
+  usuario String @unique
+  senha String
+  posts Post[]
+}
+
+model Post{
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    usuario    @relation(fields: [authorId], references: [id_user])
+  authorId  Int
+}
+
+model alunos{
+  id_alunos Int @id @default(autoincrement())
+  nome_aluno String 
+  cpf String @unique
+  data_nasc DateTime
+}
+
+model modulos{
+  id_mod Int @id @default(autoincrement())
+  nome_mod String 
+  cpf String @unique
+  data_nasc DateTime
+  nota1 Float
+  nota2 Float
+  nota3 Float
+
+  aluno_id Int 
+}
